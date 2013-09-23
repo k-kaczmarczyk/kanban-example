@@ -29,6 +29,7 @@ footer {
 ul.taskList {
 	list-style: none;
 	padding: 0;
+	min-height: 100px;
 }
 
 ul.taskList li {
