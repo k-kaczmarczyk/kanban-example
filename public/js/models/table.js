@@ -3,7 +3,7 @@ define(["underscore","backbone","collections/tasks"],
 		var TableModel = Backbone.Model.extend({
 			defaults:  {
 				statuses: ['wymagania','analiza','development','testy'],
-				name: 'My Table'
+				name: 'EHM'
 			},
 			initialize: function(attributes) {
 				this.tasks = new TasksCollection();

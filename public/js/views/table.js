@@ -21,7 +21,6 @@ define(["jquery","underscore","backbone","models/table",'views/task','jqueryui']
 				this.listenTo(this.model.tasks,'add',this.addOne);
 			},
 			render: function() {
-				console.log('render table view');
 				this.$el.html(this.template(this.model.toJSON()));
 				this.initializeSortable();
 				return this;
