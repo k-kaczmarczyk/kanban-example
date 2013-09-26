@@ -16,13 +16,14 @@
                     <div class="navbar-header"><a href="#no-link" class="navbar-brand">Kanban</a></div>
                     <div>
                         <ul class="nav navbar-nav">
-                            <li class="active"><a href="#no-link">My table</a></li>
                             <li><a href="#no-link">Edit table</a></li>
-                            <li><a href="#no-link">New task</a></li>
-                            <li><a href="#no-link">Generate summary</a></li>
-                            <li><a href="#no-link">Options</a></li>
+                            <li><a href="#no-link" id="newTaskAction">New task</a></li>
+                            <li><a href="#no-link" id="summaryAction">Generate summary</a></li>
+                            <!-- <li><a href="#no-link">Options</a></li> -->
+                        </ul>
+                        <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                <a href="#no-link" data-toggle="dropdown" class="dropdown toggle">Dropdown<b class="caret"></b></a>
+                                <a href="#no-link" data-toggle="dropdown" class="dropdown toggle">Tables<b class="caret"></b></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#no-link">Link 1</a></li>
                                     <li><a href="#no-link">Link 2</a></li>
@@ -33,39 +34,7 @@
                     </div>
                 </nav>
             </header>
-            <section class="container">
-                <h1>Table name</h1>
-                <div class="row" id="myTable">
-                    <div class="col-md-3">
-                        <h3>Wymagania</h3>
-                        <ul class="taskList">
-                            <li class="task">AWD</li>
-                            <li class="task">Szkody pracowników AC/OC</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Analiza</h3>
-                        <ul class="taskList">
-                            <li class="task">Pozostałe obszary</li>
-                            <li class="task">Wypożyczalnie OC MTU w. mini</li>
-                            <li class="task">TVN</li>
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Development</h3>
-                        <ul class="taskList">
-                        </ul>
-                    </div>
-                    <div class="col-md-3">
-                        <h3>Testy</h3>
-                        <ul class="taskList">
-                            <li class="task">Napisać eurotax od nowa</li>
-                            <li class="task">Pisma 7-dniowe</li>
-                            <li class="task">Rozbicie adresu na poszczególne adresy</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <section class="container" id="tableContent"></section>
         </div>
         <footer>
             <div class="container">

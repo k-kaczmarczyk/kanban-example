@@ -20,7 +20,7 @@ footer {
 	margin: 20px 0;
 }
 
-#myTable h3 {
+#tableContent h3 {
 	text-align: center;
 	margin-bottom: 30px;
 	color: #002EB8;
@@ -36,7 +36,43 @@ ul.taskList li {
 	margin: 10px 0;
 	min-height: 60px;
 	background-color: #fc3;
-	font-weight: bold;
 	padding: 10px;
-	font-size: 1.25em
+	font-size: 1.1em;
+}
+
+ul.taskList li small {
+	font-size: 0.6em;
+	display: block;
+	text-align: right;
+}
+
+ul.taskList li strong {
+	display: block;
+	text-align: center;
+	font-weight: bold;
+}
+
+ul.taskList li .edit {
+	display:none;
+}
+
+ul.taskList .editing .edit {
+	display:block;
+}
+
+ul.taskList .editing .view {
+	display:none;
+}
+
+ul.taskList .edit input {
+	width: 100%;
+	padding: 8px 10px 10px 10px;
+	margin-bottom: 10px;
+}
+
+ul.taskList .edit textarea {
+	width: 100%;
+	height: 80px;
+	font-size: 0.7em;
+	margin-bottom: 5px;
 }
