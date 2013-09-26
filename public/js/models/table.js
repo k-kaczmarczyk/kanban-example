@@ -6,12 +6,12 @@ define(["underscore","backbone","collections/tasks"],
 				name: 'EHM'
 			},
 			initialize: function(attributes) {
-				this.tasks = new TasksCollection();
-				// this.listenTo(this.tasks,'add',this.taskAdded);
+				this.tasks = new TasksCollection(attributes.tasks);
+				this.listenTo(this.tasks,'change',this.saveWhole);
 			},
-			taskAdded: function(task) {
-				this.trigger('change');
-			},
+			saveWhole: function() {
+				console.log('saveWhole');
+			}
 		});
 
 		return TableModel;

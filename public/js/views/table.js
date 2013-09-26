@@ -25,10 +25,22 @@ define(["jquery","underscore","backbone","models/table",'views/task','jqueryui']
 			render: function() {
 				this.$el.html(this.template(this.model.toJSON()));
 				this.initializeSortable();
+				this.renderTasks();
 				return this;
 			},
+			renderTasks: function() {
+				if (this.model.tasks.length > 0)
+					this.model.tasks.each(function(task) {
+						this.addOne(task);
+					},this);
+			},
 			changeModel: function(table) {
+				this.stopListening();
 				this.model = table;
+				this.listenTo(this.model,'add',this.render);
+				this.listenTo(this.model,'change',this.render);
+				this.listenTo(this.model,'destroy',this.remove);
+				this.listenTo(this.model.tasks,'add',this.addOne);
 				this.render();
 			},
 			initializeSortable: function() {
@@ -42,7 +54,7 @@ define(["jquery","underscore","backbone","models/table",'views/task','jqueryui']
 					if (ui.sender !== null) {
 						//status change
 						var statusIdx = ui.item.parents('.statusColumn').index();
-						ui.item.trigger('drop',statusIdx);
+						ui.item.trigger('drop',that.model.get('statuses')[statusIdx]);
 					}
 				});
 			},

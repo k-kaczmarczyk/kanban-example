@@ -7,9 +7,17 @@ var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',function() {
 
+	var TaskSchema = mongoose.Schema({
+		name: String,
+		description: String,
+		status: String,
+		created: Date
+	});
+
 	var tableSchema = mongoose.Schema({
 		name: String,
-		statuses: Array
+		statuses: Array,
+		tasks: [TaskSchema]
 	});
 
 	var tableModel = mongoose.model('Table',tableSchema);
@@ -49,7 +57,7 @@ db.once('open',function() {
 	});
 
 	app.post('/tables',function(req,res) {
-		
+
 	});
 
 	app.listen(80);

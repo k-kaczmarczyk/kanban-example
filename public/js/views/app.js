@@ -18,7 +18,7 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 				TablesCollection.fetch();
 			},
 			dump: function() {
-				this.table.tasks.each(function(task) {
+				this.view.model.tasks.each(function(task) {
 					console.log(task.get('title')+' '+task.get('status'));
 				});
 			},
@@ -28,7 +28,7 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 				}
 			},
 			addOne: function() {
-				this.table.tasks.add({table:this.table});
+				this.view.model.tasks.add({table:this.view.model});
 			},
 			addTableToMenu: function(table) {
 				var html = this.tableLinkTemplate(table.toJSON());

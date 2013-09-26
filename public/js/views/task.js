@@ -4,7 +4,7 @@ define(['jquery','underscore','backbone'/*,'text!templates/task.html'*/],
 		var taskTemplate = '<div class="view"> \
 			<strong><%- title %></strong> \
 			<%- description %> \
-			<small><%- created.toLocaleDateString() %></small> \
+			<small><%- new Date(created).toLocaleDateString() %></small> \
 		</div> \
 		<div class="edit"> \
 			<input type="text" class="edit" value="<%- title %>"/> \
@@ -34,8 +34,8 @@ define(['jquery','underscore','backbone'/*,'text!templates/task.html'*/],
 				this.$textarea = this.$('textarea');
 				return this;
 			},
-			drop: function(event, statusIdx) {
-				this.model.updateStatus(statusIdx);
+			drop: function(event, status) {
+				this.model.set('status',status);
 			},
 			edit: function() {
 				this.$textarea.val(this.model.get('description'));
