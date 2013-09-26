@@ -17,16 +17,19 @@ define(["jquery","underscore","backbone","models/table",'views/task','jqueryui']
 			template: _.template(tableTemplate),
 			initialize: function() {
 				this.listenTo(this.model,'add',this.render);
+				this.listenTo(this.model,'change',this.render);
 				this.listenTo(this.model,'destroy',this.remove);
 				this.listenTo(this.model.tasks,'add',this.addOne);
+				this.render();
 			},
 			render: function() {
 				this.$el.html(this.template(this.model.toJSON()));
 				this.initializeSortable();
 				return this;
 			},
-			renderTasks: function(){
-				
+			changeModel: function(table) {
+				this.model = table;
+				this.render();
 			},
 			initializeSortable: function() {
 				var that = this;
@@ -45,7 +48,6 @@ define(["jquery","underscore","backbone","models/table",'views/task','jqueryui']
 			},
 			addOne: function(task) {
 				var view = new TaskView({model:task});
-				console.log('add task - '+task.get('status'));
 				var column = _.indexOf(this.model.get('statuses'),task.get('status'));
 				$('#tableContent').find('ul').eq(column).append(view.render().el);
 			}
