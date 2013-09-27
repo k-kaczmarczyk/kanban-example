@@ -3,8 +3,6 @@ define(['underscore','backbone','models/table'],
 		var TablesCollection = Backbone.Collection.extend({
 			model: Table,
 			url: '/tables'
-
-
 		});
 
 		return new TablesCollection();

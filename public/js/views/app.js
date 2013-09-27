@@ -28,7 +28,8 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 				}
 			},
 			addOne: function() {
-				this.view.model.tasks.add({table:this.view.model});
+				var status = this.view.model.get('statuses')[0];
+				var model = this.view.model.tasks.create({status: status});
 			},
 			addTableToMenu: function(table) {
 				var html = this.tableLinkTemplate(table.toJSON());
@@ -41,7 +42,6 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 			loadTable: function(event) {
 				var tableName = $(event.target).text();
 				var table = TablesCollection.findWhere({name: tableName});
-				console.log('clicked '+tableName);
 
 				if (this.view === undefined) {
 					this.view = new TableView({model: table});

@@ -1,17 +1,5 @@
-define(['jquery','underscore','backbone'/*,'text!templates/task.html'*/],
-	function($,_,Backbone/*,taskTemplate*/) {
-		/*jshint multistr: true */
-		var taskTemplate = '<div class="view"> \
-			<strong><%- title %></strong> \
-			<%- description %> \
-			<small><%- new Date(created).toLocaleDateString() %></small> \
-		</div> \
-		<div class="edit"> \
-			<input type="text" class="edit" value="<%- title %>"/> \
-			<textarea><%- description %></textarea> \
-			<button>Save</button> \
-		</div>';
-
+define(['jquery','underscore','backbone','text!templates/task.html'],
+	function($,_,Backbone,taskTemplate) {
 		var TaskView = Backbone.View.extend({
 			tagName: "li",
 			className: "task",
@@ -19,9 +7,10 @@ define(['jquery','underscore','backbone'/*,'text!templates/task.html'*/],
 			events: {
 				'drop': "drop",
 				'dblclick': 'edit',
-				'click button': 'save',
+				'click button.save': 'save',
 				'click .edit' : 'preventAppClick',
-				'blur': 'close'
+				'blur': 'close',
+				'click button.close': 'delete'
 			},
 			initialize: function() {
 				this.listenTo(this.model,'change',this.render);
@@ -35,7 +24,8 @@ define(['jquery','underscore','backbone'/*,'text!templates/task.html'*/],
 				return this;
 			},
 			drop: function(event, status) {
-				this.model.set('status',status);
+				console.log(this.model.id);
+				this.model.save('status',status);
 			},
 			edit: function() {
 				this.$textarea.val(this.model.get('description'));
@@ -53,6 +43,10 @@ define(['jquery','underscore','backbone'/*,'text!templates/task.html'*/],
 				this.$el.removeClass('editing');
 			},
 			preventAppClick: function(event) {
+				event.stopPropagation();
+			},
+			delete: function(event) {
+				this.model.destroy();
 				event.stopPropagation();
 			}
 		});

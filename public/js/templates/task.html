@@ -1,10 +1,11 @@
 <div class="view">
+	<button type="button" class="close" aria-hidden="true" data-dismiss="alert">&times;</button>
 	<strong><%- title %></strong>
 	<%- description %>
-	<small><%- created.toLocaleDateString() %></small>
+	<small><%- new Date(created).toLocaleDateString() %></small>
 </div>
 <div class="edit">
 	<input type="text" class="edit" value="<%- title %>"/>
-	<textarea><%- description -%></textarea>
-	<button>Save</button>
+	<textarea><%- description %></textarea>
+	<button class='save'>Save</button>
 </div>

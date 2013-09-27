@@ -8,7 +8,7 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open',function() {
 
 	var TaskSchema = mongoose.Schema({
-		name: String,
+		title: String,
 		description: String,
 		status: String,
 		created: Date
@@ -21,17 +21,20 @@ db.once('open',function() {
 	});
 
 	var tableModel = mongoose.model('Table',tableSchema);
+	var taskModel = mongoose.model('Task',TaskSchema);
 
 	app.use(express.static(__dirname+'/public'));
-
+	app.use(express.bodyParser());
 	app.get('/',function(req, res) {
 		res.sendfile('index.html');
 	});
 
 	function handleDBError(err, res) {
 		console.error('retrieving error ', err);
-		res.statusCode = 404;
-		return res.send('Error querying the database');
+		if (res!==undefined) {
+			res.statusCode = 404;
+			return res.send('Error querying the database');
+		}
 	}
 
 	app.get('/tables',function(req,res) {
@@ -58,6 +61,73 @@ db.once('open',function() {
 
 	app.post('/tables',function(req,res) {
 
+	});
+
+	app.post('/tasks/:table', function(req,res) {
+		var table = tableModel.findOne({'name':req.params.table},function(err,table) {
+			if (err) {
+				return handleDBError(err,res);
+			}
+			else {
+				var task = {
+					title: req.body.title,
+					description: req.body.description,
+					status: req.body.status,
+					created: req.body.created
+				};
+				table.tasks.push(task);
+				table.save(function (err,table) {
+					if (err) {
+						return handleDBError(err);
+					}
+					else {
+						var id = table.tasks[table.tasks.length-1].id;
+						return res.json({id: id});
+					}
+				});
+			}
+		});
+	});
+
+	app.delete('/tasks/:table/:id', function(req,res) {
+		var table = tableModel.findOne({'name':req.params.table},function(err,table) {
+			if (err) {
+				return handleDBError(err,res);
+			}
+			else {
+				var task = table.tasks.id(req.params.id).remove();
+				table.save(function (err,table) {
+					if (err) {
+						return handleDBError(err);
+					}
+					else {
+						return res.send('OK');
+					}
+				});
+			}
+		});
+	});
+
+	app.put('/tasks/:table/:id', function(req,res) {
+		var table = tableModel.findOne({'name':req.params.table},function(err,table) {
+			if (err) {
+				return handleDBError(err,res);
+			}
+			else {
+				var task = table.tasks.id(req.params.id);
+				task.description = req.body.description;
+				task.title = req.body.title;
+				task.status = req.body.status;
+				table.save(function (err,table) {
+					if (err) {
+						return handleDBError(err);
+					}
+					else {
+						return res.send('OK');
+					}
+				});
+			}
+		});
 	});
 
 	app.listen(80);
