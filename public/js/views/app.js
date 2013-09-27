@@ -6,9 +6,12 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 			el: "#wrap",
 			events: {
 				'click #summaryAction': 'dump',
-				'click': 'appClick',
 				'click #newTaskAction': 'addOne',
-				'click .tableLink': 'loadTable'
+				'click #addTableAction': 'addTable',
+				'click': 'appClick',
+				'click .tableLink': 'loadTable',
+				'click #saveTable' : 'newTable',
+				'change #tableColumnsNr': 'columnsNumberChange'
 			},
 			tableLinkTemplate: _.template(tableLinkTemplate),
 			initialize: function() {
@@ -33,7 +36,7 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 			},
 			addTableToMenu: function(table) {
 				var html = this.tableLinkTemplate(table.toJSON());
-				this.$('#tablesMenu').append(html);
+				this.$('#tablesMenu').prepend(html);
 			},
 			renderTablesInMenu: function() {
 				this.$('#tablesMenu').children().detach();
@@ -49,6 +52,49 @@ define(['jquery', 'underscore','backbone','models/table', "views/table",'collect
 				else {
 					this.view.changeModel(table);
 				}
+			},
+			addTable: function() {
+				this.$('#addTableForm').modal({keyboard:true});
+			},
+			columnsNumberChange: function() {
+				var nr = parseInt(this.$('#tableColumnsNr').val(),10);
+				var inputs = this.$('#addTableForm').find('div.column_name');
+				if (inputs.length > nr) {
+					inputs.filter(':gt('+(nr-1)+')').detach();
+				}
+				else if (nr > inputs.length) {
+					for (var i = nr; i > inputs.length; i--) {
+						var last_one = inputs.filter(':last');
+						var copy = last_one.clone().val('');
+						copy.insertAfter(last_one);
+					}
+				}
+			},
+			newTable: function() {
+				this.$('#addTableForm .form-group').removeClass('has-error');
+				var data = {
+					name: this.$('#tableTitle').val(),
+					description: this.$('#tableDescription').val(),
+					statuses: this.$('#addTableForm .column_name input').map(function(){
+						return $(this).val();
+					}).get()
+				};
+				var self = this;
+				TablesCollection.once('invalid',function(model,err) {
+					console.log(err);
+					if (_.has(err,'name')) {
+						self.$('#tableTitle').parent().addClass('has-error');
+					}
+					if (_.has(err,'statuses')) {
+						_.each(err.statuses, function(error, idx) {
+							self.$('#addTableForm').find('div.column_name:eq('+idx+')').addClass('has-error');
+						});
+					}
+				});
+				TablesCollection.create(data,{success: function() {
+					console.log('OK!');
+					self.$('#addTableForm').modal('hide');
+				}});
 			}
 		});
 

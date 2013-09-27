@@ -60,7 +60,21 @@ db.once('open',function() {
 	});
 
 	app.post('/tables',function(req,res) {
-
+		var tableData = {
+			name: req.body.name,
+			statuses: req.body.statuses,
+			tasks: []
+		};
+		var table = new tableModel(tableData);
+		table.save(function (err,table) {
+			if (err) {
+				return handleDBError(err);
+			}
+			else {
+				var id = table.id;
+				return res.json({id: id});
+			}
+		});
 	});
 
 	app.post('/tasks/:table', function(req,res) {

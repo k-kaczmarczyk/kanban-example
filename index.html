@@ -25,6 +25,8 @@
                             <li class="dropdown">
                                 <a href="#no-link" data-toggle="dropdown" class="dropdown toggle">Tables<b class="caret"></b></a>
                                 <ul class="dropdown-menu" id="tablesMenu">
+                                    <li class="divider">&nbsp;</li>
+                                    <li><a href="#no-link" id="addTableAction">Add new table</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -32,7 +34,56 @@
                 </nav>
             </header>
             <section class="container" id="tableContent"></section>
+            <section id="addTableForm" class="modal fade" role="dialog">
+            <div class="modal-dialog">            
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Add table</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form action="">
+                            <div class="form-group">
+                                <label for="tableTitle" class="control-label">Name*</label>
+                                <input type="text" class="form-control" id="tableTitle" placeholder="Enter title" name="title">
+                            </div>
+                            <div class="form-group">
+                                <label for="tableDescription" class="control-label">Description</label>
+                                <textarea rows="3" id="tableDescription" class="form-control" name="description"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="tableColumnsNr" class="control-label">Numer of columns</label>
+                                <select class="form-control" id="tableColumnsNr" name="columnsNumber">
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                    <option value="9">9</option>
+                                    <option value="10">10</option>
+                                    <option value="11">11</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <div class="form-group column_name">
+                                <label class="control-label">Column names*</label>
+                                <input type="text" class="form-control" placeholder="Enter name" name="column[]">
+                            </div>
+                            <div class="form-group column_name">
+                                <input type="text" class="form-control" placeholder="Enter name" name="column[]">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button class="btn btn-primary" id="saveTable">Save</button>
+                    </div>
+                </div>
+            </div>
+        </section>
         </div>
+
         <footer>
             <div class="container">
                 <p class="text-muted credits">&copy; Ojciec 2013</p>

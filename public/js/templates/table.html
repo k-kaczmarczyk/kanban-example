@@ -1,10 +1,10 @@
-<h1><%- name%></h1>
-<div class="row">
-    <% _.each(statuses,function(status) { %>
-        <div class="col-md-3">
-            <h3><%- status %></h3>
-            <ul class="taskList">                
-            </ul>
-        </div>
-    <% }); %>
+<h1><%- name%></h1> 
+<div class="row"> 
+	<% _.each(statuses,function(status) { %> 
+		<div class="col-md-<%-Math.floor(12/statuses.length)%> statusColumn"> 
+			<h3><%- status %></h3> 
+			<ul class="taskList"> 
+		</ul> 
+		</div> 
+	<% }); %> 
 </div>

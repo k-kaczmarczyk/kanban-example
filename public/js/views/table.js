@@ -1,16 +1,5 @@
-define(["jquery","underscore","backbone","models/table",'views/task','jqueryui'],
-	function($,_,Backbone,TableModel,TaskView) {
-			/*jshint multistr: true */
-			var tableTemplate = '<h1><%- name%></h1> \
-			<div class="row"> \
-				<% _.each(statuses,function(status) { %> \
-					<div class="col-md-3 statusColumn"> \
-						<h3><%- status %></h3> \
-						<ul class="taskList"> \
-					</ul> \
-					</div> \
-				<% }); %> \
-			</div>';
+define(["jquery","underscore","backbone","models/table",'views/task','text!templates/table.html', 'jqueryui'],
+	function($,_,Backbone,TableModel,TaskView,tableTemplate) {
 
 		var TableView = Backbone.View.extend({
 			el: "#tableContent",

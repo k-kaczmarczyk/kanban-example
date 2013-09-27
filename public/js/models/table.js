@@ -13,17 +13,27 @@ define(["underscore","backbone","collections/tasks"],
 						task.id = task.get('_id');
 				});
 				this.tasks.url = 'tasks/'+this.get('name')+'/';
-				// this.listenTo(this.tasks,'change add',this.saveTask);
-				// this.listenTo(this.tasks,'remove',this.removeTask);
 			},
-			saveTask: function(task) {
-				// task.url = 'tasks/'+this.get('name')+'/';
-				// task.save();
-			},
-			removeTask: function(task) {
-				
-				// task.remove
-				// console.log('remove');
+			validate: function(attrs, options) {
+				var errors = {};
+				if (attrs.name === undefined || attrs.name === '') {
+					errors.name = 'Name is required';
+				}
+				if (attrs.statuses === undefined || attrs.length < 2) {
+					errors.statuses = 'Column names are required and there should be at least 2';
+				}
+				else {
+					errors.statuses = [];
+					_.each(attrs.statuses, function(status, idx) {
+						if (status === '') {
+							errors.statuses[idx] = 'Column name is required';
+						}
+					});
+					if (errors.statuses.length === 0)
+						delete errors.statuses;
+				}
+				if  (!_.isEmpty(errors))
+					return errors;
 			}
 		});
 
